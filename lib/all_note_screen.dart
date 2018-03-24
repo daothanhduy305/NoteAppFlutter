@@ -28,14 +28,14 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 				if (index < data.length)
 					return buildNoteTile(data[index], index == data.length - 1);
 			},
-			);
+		);
 
 	Widget buildNoteTile(NoteData noteData, [bool isLast = false]) {
 		var noteTile = new ListTile(
 			title: new Padding(
 				padding: new EdgeInsets.only(top: 10.0),
 				child: new Text(noteData.title),
-				),
+			),
 			subtitle: new Column(
 				crossAxisAlignment: CrossAxisAlignment.stretch,
 				children: <Widget>[
@@ -44,9 +44,9 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 						padding: new EdgeInsets.only(top: 20.0, bottom: 10.0),
 						child: new Text(
 							dateFormat.format(noteData.createdDate)),
-						)
+					)
 				],
-				),
+			),
 			onLongPress: () =>
 				showDialog(
 					context: context,
@@ -63,10 +63,10 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 										new MaterialPageRoute<NoteData>(
 											builder: (context) =>
 											new NewNoteScreen(noteData.title,
-												                  noteData
-													                  .content,
-												                  "Edit Note")
-											));
+												noteData
+													.content,
+												"Edit Note")
+										));
 									if (newNoteData != null) {
 										newNoteData.id = noteData.id;
 										newNoteData.createdDate =
@@ -80,7 +80,7 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 										});
 									}
 								},
-								),
+							),
 							new Divider(),
 							new SimpleDialogOption(
 								child: new Text('Delete', style: new TextStyle(
@@ -91,16 +91,17 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 										noteData.id);
 									// Use primary key to indicate data in list
 									setState(() =>
-										data.removeWhere((note) => note.id ==
+										data.removeWhere((note) =>
+										note.id ==
 											noteData.id));
 									// Then dismiss the dialog
 									Navigator.pop(context);
 								}
-								),
+							),
 						],
-						)
-					),
-			);
+					)
+				),
+		);
 
 		if (isLast)
 			return noteTile;
@@ -110,7 +111,7 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 					noteTile,
 					new Divider()
 				],
-				);
+			);
 	}
 
 }

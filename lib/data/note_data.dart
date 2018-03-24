@@ -70,9 +70,9 @@ class NoteDataProvider {
 							$columnDate string not null
 						);
 						'''
-					);
+				);
 			}
-			);
+		);
 	}
 
 	Future<NoteData> insert(NoteData noteData) async {
@@ -99,7 +99,7 @@ class NoteDataProvider {
 		List<Map> maps = await database.query(
 			tableName,
 			columns: [columnId, columnTitle, columnContent, columnDate],
-			);
+		);
 		await close();
 
 		return maps.map((map) => new NoteData.fromMap(map)).toList();
@@ -111,7 +111,7 @@ class NoteDataProvider {
 			tableName,
 			where: "$columnId = ?",
 			whereArgs: [id]
-			);
+		);
 		await close();
 
 		return result;
@@ -124,7 +124,7 @@ class NoteDataProvider {
 			noteData.toMap(),
 			where: "$columnId = ?",
 			whereArgs: [noteData.id]
-			);
+		);
 		await close();
 
 		return result;

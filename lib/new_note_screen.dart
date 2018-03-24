@@ -39,11 +39,11 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 								form.save();
 								Navigator.of(context).pop(new NoteData(
 									title, content, new DateTime.now()
-									));
+								));
 							}
 						})
 				],
-				),
+			),
 			body: new Form(
 				key: formKey,
 				autovalidate: true,
@@ -56,11 +56,11 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 							child: new TextFormField(
 								decoration: new InputDecoration(
 									hintText: 'Note title',
-									),
+								),
 								style: new TextStyle(
 									fontSize: 22.0,
 									color: Colors.black87
-									),
+								),
 								maxLines: 1,
 								autofocus: true,
 								initialValue: title,
@@ -69,18 +69,18 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 									? 'Empty title'
 									: null,
 								onSaved: (val) => title = val,
-								),
 							),
+						),
 						new Padding(
 							padding: new EdgeInsets.all(10.0),
 							child: new TextFormField(
 								decoration: new InputDecoration.collapsed(
 									hintText: 'Note content'
-									),
+								),
 								style: new TextStyle(
 									fontSize: 18.0,
 									color: Colors.black87
-									),
+								),
 								maxLines: null,
 								keyboardType: TextInputType.multiline,
 								initialValue: content,
@@ -89,12 +89,12 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 									? 'Empty content'
 									: null,
 								onSaved: (val) => content = val,
-								),
 							),
+						),
 					],
-					),
 				),
-			);
+			),
+		);
 	}
 
 }

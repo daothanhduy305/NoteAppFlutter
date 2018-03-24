@@ -44,8 +44,11 @@ class NoteData {
 
 class NoteDataProvider {
 	// Singleton Pattern
-	static final NoteDataProvider _noteDataProvider = new NoteDataProvider._internal();
+	static final NoteDataProvider _noteDataProvider = new NoteDataProvider
+		._internal();
+
 	NoteDataProvider._internal();
+
 	static NoteDataProvider getInstance() => _noteDataProvider;
 
 	Database database;
@@ -55,11 +58,11 @@ class NoteDataProvider {
 		String path = join(documentsDirectory.path, dbName);
 
 		database = await openDatabase(
-				path,
-				version: 1,
-				onCreate: (db, ver) async {
-					await db.execute(
-						'''
+			path,
+			version: 1,
+			onCreate: (db, ver) async {
+				await db.execute(
+					'''
 						create table $tableName(
 							$columnId integer primary key autoincrement,
 							$columnTitle text not null,
@@ -68,8 +71,8 @@ class NoteDataProvider {
 						);
 						'''
 					);
-				}
-		);
+			}
+			);
 	}
 
 	Future<NoteData> insert(NoteData noteData) async {
@@ -82,13 +85,13 @@ class NoteDataProvider {
 	Future<NoteData> getNoteData(int id) async {
 		await open();
 		List<Map> maps = await database.query(
-				tableName,
-				columns: [columnId, columnTitle, columnContent, columnDate],
-				where: "$columnId = ?",
-				whereArgs: [id]);
+			tableName,
+			columns: [columnId, columnTitle, columnContent, columnDate],
+			where: "$columnId = ?",
+			whereArgs: [id]);
 		await close();
 
-		return maps.length > 0? new NoteData.fromMap(maps.first) : null;
+		return maps.length > 0 ? new NoteData.fromMap(maps.first) : null;
 	}
 
 	Future<List<NoteData>> getAllNoteData() async {
@@ -96,7 +99,7 @@ class NoteDataProvider {
 		List<Map> maps = await database.query(
 			tableName,
 			columns: [columnId, columnTitle, columnContent, columnDate],
-		);
+			);
 		await close();
 
 		return maps.map((map) => new NoteData.fromMap(map)).toList();
@@ -105,10 +108,10 @@ class NoteDataProvider {
 	Future<int> delete(int id) async {
 		await open();
 		var result = await database.delete(
-				tableName,
-				where: "$columnId = ?",
-				whereArgs: [id]
-		);
+			tableName,
+			where: "$columnId = ?",
+			whereArgs: [id]
+			);
 		await close();
 
 		return result;
@@ -117,11 +120,11 @@ class NoteDataProvider {
 	Future<int> update(NoteData noteData) async {
 		await open();
 		var result = await database.update(
-				tableName,
-				noteData.toMap(),
-				where: "$columnId = ?",
-				whereArgs: [noteData.id]
-		);
+			tableName,
+			noteData.toMap(),
+			where: "$columnId = ?",
+			whereArgs: [noteData.id]
+			);
 		await close();
 
 		return result;

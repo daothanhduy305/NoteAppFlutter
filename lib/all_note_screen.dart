@@ -22,12 +22,12 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 
 	@override
 	Widget build(BuildContext context) =>
-			new ListView.builder(
-				padding: new EdgeInsets.only(top: 10.0),
-				itemBuilder: (context, index) {
-					if (index < data.length)
-						return buildNoteTile(data[index], index == data.length - 1);
-				},
+		new ListView.builder(
+			padding: new EdgeInsets.only(top: 10.0),
+			itemBuilder: (context, index) {
+				if (index < data.length)
+					return buildNoteTile(data[index], index == data.length - 1);
+			},
 			);
 
 	Widget buildNoteTile(NoteData noteData, [bool isLast = false]) {
@@ -35,56 +35,72 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 			title: new Padding(
 				padding: new EdgeInsets.only(top: 10.0),
 				child: new Text(noteData.title),
-			),
+				),
 			subtitle: new Column(
 				crossAxisAlignment: CrossAxisAlignment.stretch,
 				children: <Widget>[
 					new Text(noteData.content),
 					new Container(
 						padding: new EdgeInsets.only(top: 20.0, bottom: 10.0),
-						child: new Text(dateFormat.format(noteData.createdDate)),
-					)
+						child: new Text(
+							dateFormat.format(noteData.createdDate)),
+						)
 				],
-			),
+				),
 			onLongPress: () =>
-					showDialog(
-							context: context,
-							child: new SimpleDialog(
-								title: new Text(noteData.title,),
-								children: <Widget>[
-									new SimpleDialogOption(
-										child: new Text('Edit', style: new TextStyle(fontSize: 18.0),),
-										onPressed: () async {
-											Navigator.pop(context);
-											NoteData newNoteData = await Navigator.of(context).push(new MaterialPageRoute<NoteData>(
-												builder: (context) => new NewNoteScreen(noteData.title, noteData.content, "Edit Note")
+				showDialog(
+					context: context,
+					child: new SimpleDialog(
+						title: new Text(noteData.title,),
+						children: <Widget>[
+							new SimpleDialogOption(
+								child: new Text('Edit', style: new TextStyle(
+									fontSize: 18.0),),
+								onPressed: () async {
+									Navigator.pop(context);
+									NoteData newNoteData = await Navigator.of(
+										context).push(
+										new MaterialPageRoute<NoteData>(
+											builder: (context) =>
+											new NewNoteScreen(noteData.title,
+												                  noteData
+													                  .content,
+												                  "Edit Note")
 											));
-											if (newNoteData != null) {
-												newNoteData.id = noteData.id;
-												newNoteData.createdDate = noteData.createdDate;
-												await NoteDataProvider.getInstance().update(newNoteData);
-												setState(() {
-													noteData.title = newNoteData.title;
-													noteData.content = newNoteData.content;
-												});
-											} },
-									),
-									new Divider(),
-									new SimpleDialogOption(
-										child: new Text('Delete', style: new TextStyle(fontSize: 18.0),),
-										onPressed: () async {
-											// We wait for db changes to ensure
-											await NoteDataProvider.getInstance().delete(noteData.id);
-											// Use primary key to indicate data in list
-											setState(() => data.removeWhere((note) => note.id == noteData.id));
-											// Then dismiss the dialog
-											Navigator.pop(context);
-										}
-									),
-								],
-							)
+									if (newNoteData != null) {
+										newNoteData.id = noteData.id;
+										newNoteData.createdDate =
+											noteData.createdDate;
+										await NoteDataProvider.getInstance()
+											.update(newNoteData);
+										setState(() {
+											noteData.title = newNoteData.title;
+											noteData.content =
+												newNoteData.content;
+										});
+									}
+								},
+								),
+							new Divider(),
+							new SimpleDialogOption(
+								child: new Text('Delete', style: new TextStyle(
+									fontSize: 18.0),),
+								onPressed: () async {
+									// We wait for db changes to ensure
+									await NoteDataProvider.getInstance().delete(
+										noteData.id);
+									// Use primary key to indicate data in list
+									setState(() =>
+										data.removeWhere((note) => note.id ==
+											noteData.id));
+									// Then dismiss the dialog
+									Navigator.pop(context);
+								}
+								),
+						],
+						)
 					),
-		);
+			);
 
 		if (isLast)
 			return noteTile;
@@ -94,7 +110,7 @@ class AllNoteScreenState extends State<AllNoteScreen> {
 					noteTile,
 					new Divider()
 				],
-			);
+				);
 	}
 
 }

@@ -6,10 +6,12 @@ class NewNoteScreen extends StatefulWidget {
 	final String content;
 	final String appBarTitle;
 
-	NewNoteScreen([this.title = '', this.content = '', this.appBarTitle = 'New Note']);
+	NewNoteScreen(
+		[this.title = '', this.content = '', this.appBarTitle = 'New Note']);
 
 	@override
-	State<StatefulWidget> createState() => new NewNoteScreenState(title, content, appBarTitle);
+	State<StatefulWidget> createState() =>
+		new NewNoteScreenState(title, content, appBarTitle);
 
 }
 
@@ -24,23 +26,22 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 
 	@override
 	Widget build(BuildContext context) {
-
 		return new Scaffold(
 			appBar: new AppBar(
 				title: new Text(appBarTitle),
 				actions: <Widget>[
 					new IconButton(
-							icon: new Icon(Icons.check),
-							onPressed: () {
-								final form = formKey.currentState;
-								// Validate successful and call onSave
-								if (form.validate()) {
-									form.save();
-									Navigator.of(context).pop(new NoteData(
-											title, content, new DateTime.now()
-											));
-								}
-							})
+						icon: new Icon(Icons.check),
+						onPressed: () {
+							final form = formKey.currentState;
+							// Validate successful and call onSave
+							if (form.validate()) {
+								form.save();
+								Navigator.of(context).pop(new NoteData(
+									title, content, new DateTime.now()
+									));
+							}
+						})
 				],
 				),
 			body: new Form(
@@ -57,13 +58,16 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 									hintText: 'Note title',
 									),
 								style: new TextStyle(
-										fontSize: 22.0,
-										color: Colors.black87
-										),
+									fontSize: 22.0,
+									color: Colors.black87
+									),
 								maxLines: 1,
 								autofocus: true,
 								initialValue: title,
-								validator: (text) => text.isEmpty? 'Empty title': null,
+								validator: (text) =>
+								text.isEmpty
+									? 'Empty title'
+									: null,
 								onSaved: (val) => title = val,
 								),
 							),
@@ -71,22 +75,25 @@ class NewNoteScreenState extends State<NewNoteScreen> {
 							padding: new EdgeInsets.all(10.0),
 							child: new TextFormField(
 								decoration: new InputDecoration.collapsed(
-										hintText: 'Note content'
-										),
+									hintText: 'Note content'
+									),
 								style: new TextStyle(
-										fontSize: 18.0,
-										color: Colors.black87
-										),
+									fontSize: 18.0,
+									color: Colors.black87
+									),
 								maxLines: null,
 								keyboardType: TextInputType.multiline,
 								initialValue: content,
-								validator: (text) => text.isEmpty? 'Empty content': null,
+								validator: (text) =>
+								text.isEmpty
+									? 'Empty content'
+									: null,
 								onSaved: (val) => content = val,
 								),
 							),
 					],
 					),
-			),
+				),
 			);
 	}
 

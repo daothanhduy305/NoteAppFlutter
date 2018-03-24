@@ -13,12 +13,12 @@ class MyApp extends StatelessWidget {
 			title: 'Note',
 			theme: new ThemeData(
 				primarySwatch: Colors.blue,
-			),
+				),
 			home: new MyHomePage(title: 'Note'),
 			routes: {
 				'/new_note': (context) => new NewNoteScreen(),
 			},
-		);
+			);
 	}
 }
 
@@ -36,9 +36,10 @@ class _MyHomePageState extends State<MyHomePage> {
 	final List<NoteData> notes = new List();
 
 	_MyHomePageState() {
-		noteDataProvider.getAllNoteData().then((data) => setState(() {
-			notes.addAll(data);
-		}));
+		noteDataProvider.getAllNoteData().then((data) =>
+			setState(() {
+				notes.addAll(data);
+			}));
 	}
 
 	@override
@@ -46,26 +47,28 @@ class _MyHomePageState extends State<MyHomePage> {
 		new Scaffold(
 			appBar: new AppBar(
 				title: new Text(widget.title),
-			),
+				),
 			body: new Center(
 				child: new AllNoteScreen(notes),
-			),
+				),
 			floatingActionButton: new Builder(
 				builder: (context) {
 					return new FloatingActionButton(
 						onPressed: () async {
-							var data = await Navigator.of(context).pushNamed('/new_note');
+							var data = await Navigator.of(context).pushNamed(
+								'/new_note');
 							if (data != null) addNewNote(data);
 						},
 						tooltip: 'Add new note',
 						child: new Icon(Icons.add),
-					);
+						);
 				},
-			),
-		);
+				),
+			);
 
 	void addNewNote(NoteData newNote) async =>
-			noteDataProvider.insert(newNote).then((addedNote) => setState(() {
+		noteDataProvider.insert(newNote).then((addedNote) =>
+			setState(() {
 				notes.add(addedNote);
 			}));
 
